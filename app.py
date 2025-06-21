@@ -46,6 +46,10 @@ def signup_page():
 def reset_page():
     return send_from_directory('static', 'resetPage.html')
 
+@app.route("/index.html")
+def index():
+    return send_from_directory('static', 'index.html')
+
 @app.route('/forgotUsernamePage.html')
 def serve_forgot_username():
     return send_from_directory('static', 'forgotUsernamePage.html')
