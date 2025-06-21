@@ -33,9 +33,22 @@ def send_email(to_email, otp):
     server.login("your_email@gmail.com", "YOUR_APP_PASSWORD")
     server.send_message(msg)
     server.quit()
+
 @app.route("/")
 def home():
     return render_template("loginPage.html")
+
+@app.route("/signupPage")
+def signuppage():
+    return render_template("signupPage.html")
+
+@app.route("/resetPage")
+def resetpage():
+    return render_template("resetPage.html")
+
+@app.route("/")
+def forgotusernamepage():
+    return render_template("forgotUsernamePages.html")
 
 # --- 1) Send OTP ---
 @app.route('/send-reset-otp', methods=['POST'])
