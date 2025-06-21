@@ -34,7 +34,7 @@ def send_email(to_email, otp):
     server.send_message(msg)
     server.quit()
 @app.route("/")
-def login():
+def home():
     return render_template("loginPage.html")
 
 # --- 1) Send OTP ---
