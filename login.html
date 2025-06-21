@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AFIF & JP Pvt. Ltd. - Login</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #333;
+    }
+    .container {
+      background: white;
+      padding: 2.5rem 3rem;
+      border-radius: 10px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      width: 360px;
+      text-align: center;
+    }
+    .logo {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #6c63ff;
+      margin-bottom: 0.3rem;
+    }
+    .tagline {
+      font-size: 0.9rem;
+      color: #888;
+      margin-bottom: 1.5rem;
+    }
+    h2 {
+      margin-bottom: 1.5rem;
+      color: #5a4b8a;
+    }
+    input[type="text"], input[type="password"] {
+      width: 100%;
+      padding: 12px 15px;
+      margin: 0.5rem 0 1rem 0;
+      border: 1.8px solid #ddd;
+      border-radius: 6px;
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
+    }
+    input:focus {
+      border-color: #6c63ff;
+      outline: none;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #6c63ff;
+      border: none;
+      color: white;
+      font-weight: 600;
+      font-size: 1.1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      margin-bottom: 1rem;
+    }
+    button:hover {
+      background: #574fd6;
+    }
+    .btn-link {
+      background: none;
+      border: none;
+      color: #6c63ff;
+      text-decoration: underline;
+      cursor: pointer;
+      font-size: 0.9rem;
+      padding: 0.3rem;
+      display: block;
+    }
+    #message {
+      height: 22px;
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="logo">AFIF & JP</div>
+    <div class="tagline">Empowering Digital Excellence</div>
+    <h2>Login</h2>
+    <input id="username" type="text" placeholder="Username" autocomplete="username" />
+    <input id="password" type="password" placeholder="Password" autocomplete="current-password" />
+    <button onclick="login()">Login</button>
+
+    <!-- Helpful links -->
+    <button class="btn-link" onclick="goToSignup()">Don't have an account? Sign up</button>
+    <button class="btn-link" onclick="goToForgotPassword()">Forgot Password?</button>
+    <button class="btn-link" onclick="goToForgotUsername()">Forgot Username?</button>
+
+    <div id="message"></div>
+  </div>
+
+  <script>
+    function showMessage(msg, color = 'red') {
+      const m = document.getElementById('message');
+      m.textContent = msg;
+      m.style.color = color;
+    }
+
+    function goToSignup() {
+      window.location.href = 'signup.html';
+    }
+
+    function goToForgotPassword() {
+      window.location.href = 'reset.html'; // Or the actual password reset file
+    }
+
+    function goToForgotUsername() {
+      window.location.href = 'forgotUsername.html';
+    }
+
+    async function login() {
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value;
+
+      if (!username || !password) {
+        showMessage('Please enter username and password');
+        return;
+      }
+
+      try {
+        const res = await fetch('http://127.0.0.1:5000/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password })
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          showMessage('Login successful!', 'green');
+          setTimeout(() => {
+            window.location.href = 'index.html'; // Your dashboard or home
+          }, 1000);
+        } else if (res.status === 401) {
+          showMessage('Invalid username or password');
+        } else {
+          showMessage(data.message || 'Login failed');
+        }
+      } catch (err) {
+        showMessage('Error: ' + err.message);
+      }
+    }
+  </script>
+
+</body>
+</html>

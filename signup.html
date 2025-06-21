@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AFIF & JP Pvt. Ltd. - Sign Up</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #333;
+    }
+    .container {
+      background: white;
+      padding: 2.5rem 3rem;
+      border-radius: 10px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+      width: 360px;
+      text-align: center;
+    }
+    .logo {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #6c63ff;
+      margin-bottom: 0.3rem;
+    }
+    .tagline {
+      font-size: 0.9rem;
+      color: #888;
+      margin-bottom: 1.5rem;
+    }
+    h2 {
+      margin-bottom: 1.5rem;
+      color: #5a4b8a;
+    }
+    input[type="text"], input[type="email"], input[type="password"] {
+      width: 100%;
+      padding: 12px 15px;
+      margin: 0.5rem 0 1rem 0;
+      border: 1.8px solid #ddd;
+      border-radius: 6px;
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
+    }
+    input:focus {
+      border-color: #6c63ff;
+      outline: none;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #6c63ff;
+      border: none;
+      color: white;
+      font-weight: 600;
+      font-size: 1.1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      margin-bottom: 1rem;
+    }
+    button:hover {
+      background: #574fd6;
+    }
+    .btn-link {
+      background: none;
+      border: none;
+      color: #6c63ff;
+      text-decoration: underline;
+      cursor: pointer;
+      font-size: 0.9rem;
+      padding: 0;
+    }
+    #message {
+      height: 22px;
+      margin-bottom: 1rem;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="logo">AFIF & JP</div>
+    <div class="tagline">Empowering Digital Excellence</div>
+    <h2>Sign Up</h2>
+    <input id="username" type="text" placeholder="Username" autocomplete="username" />
+    <input id="email" type="email" placeholder="Email" autocomplete="email" />
+    <input id="password" type="password" placeholder="Password" autocomplete="new-password" />
+    <input id="password2" type="password" placeholder="Confirm Password" autocomplete="new-password" />
+    <button onclick="signup()">Sign Up</button>
+    <button class="btn-link" onclick="goToLogin()">Already have an account? Login</button>
+    <div id="message"></div>
+  </div>
+
+  <script>
+    function showMessage(msg, color = 'red') {
+      const m = document.getElementById('message');
+      m.textContent = msg;
+      m.style.color = color;
+    }
+
+    function goToLogin() {
+      window.location.href = 'login.html';
+    }
+
+    async function signup() {
+      const username = document.getElementById('username').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value;
+      const password2 = document.getElementById('password2').value;
+
+      if (!username || !email || !password || !password2) {
+        showMessage('Please fill all fields');
+        return;
+      }
+
+      if (password !== password2) {
+        showMessage('Passwords do not match');
+        return;
+      }
+
+      try {
+        const res = await fetch('http://127.0.0.1:5000/signup', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, email, password })
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          showMessage('Signup successful! Redirecting...', 'green');
+          setTimeout(() => {
+            window.location.href = 'login.html';
+          }, 1500);
+        } else {
+          showMessage(data.message || 'Signup failed');
+        }
+      } catch (error) {
+        showMessage('Error: ' + error.message);
+      }
+    }
+  </script>
+
+</body>
+</html>
