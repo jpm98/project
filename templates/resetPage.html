@@ -86,7 +86,7 @@
       const email = document.getElementById('email').value.trim();
       if (!email) return showMessage('Please enter your email');
 
-      const res = await fetch('http://127.0.0.1:5000/send-reset-otp', {
+      const res = await fetch('https://project-gz37.onrender.com/send-reset-otp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email })
@@ -107,7 +107,7 @@
       const otp = document.getElementById('otp').value.trim();
       if (!otp) return showMessage('Enter OTP');
 
-      const res = await fetch('http://127.0.0.1:5000/verify-reset-otp', {
+      const res = await fetch('https://project-gz37.onrender.com/verify-reset-otp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: verifiedEmail, otp })
@@ -130,7 +130,7 @@
       if (!newPassword || !confirmPassword) return showMessage('Please fill all fields');
       if (newPassword !== confirmPassword) return showMessage('Passwords do not match');
 
-      const res = await fetch('http://127.0.0.1:5000/reset-password', {
+      const res = await fetch('https://project-gz37.onrender.com/reset-password', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: verifiedEmail, password: newPassword })
