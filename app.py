@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, send_from_directory
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask_cors import CORS
 from datetime import datetime, timedelta
@@ -40,15 +40,36 @@ def home():
 
 @app.route("/signupPage")
 def signuppage():
-    return render_template("signupPage.html")
+    return send_from_directory('static', 'signupPage.html')
 
 @app.route("/resetPage")
 def resetpage():
-    return render_template("resetPage.html")
+    return send_from_directory('static', 'resetPage.html')
 
-@app.route("/")
-def forgotusernamepage():
-    return render_template("forgotUsernamePages.html")
+@app.route('/forgotUsernamePage.html')
+def serve_forgot_username():
+    return send_from_directory('static', 'forgotUsernamePage.html')
+
+
+@app.route('/init-db')
+def init_db():
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS users (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        username VARCHAR(50) UNIQUE NOT NULL,
+        password VARCHAR(255) NOT NULL,
+        email VARCHAR(100) UNIQUE NOT NULL
+    );
+    """)
+
+    conn.commit()
+    cursor.close()
+    conn.close()
+    return 'Users table created!', 200
+
 
 # --- 1) Send OTP ---
 @app.route('/send-reset-otp', methods=['POST'])
