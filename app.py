@@ -35,7 +35,7 @@ def send_email(to_email, otp):
     server.quit()
 @app.route("/")
 def login():
-    return render_template("login.html")
+    return render_template("loginPage.html")
 
 # --- 1) Send OTP ---
 @app.route('/send-reset-otp', methods=['POST'])
