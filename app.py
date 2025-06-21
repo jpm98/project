@@ -38,11 +38,11 @@ def send_email(to_email, otp):
 def home():
     return render_template("loginPage.html")
 
-@app.route("/signupPage")
+@app.route("/signupPage.html")
 def signup_page():
     return send_from_directory('static', 'signupPage.html')
 
-@app.route("/resetPage")
+@app.route("/resetPage.html")
 def reset_page():
     return send_from_directory('static', 'resetPage.html')
 
