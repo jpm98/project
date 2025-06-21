@@ -33,6 +33,9 @@ def send_email(to_email, otp):
     server.login("your_email@gmail.com", "YOUR_APP_PASSWORD")
     server.send_message(msg)
     server.quit()
+@app.route('/')
+def index():
+    return '✅ Flask app is running on Render!'
 
 # --- 1) Send OTP ---
 @app.route('/send-reset-otp', methods=['POST'])
