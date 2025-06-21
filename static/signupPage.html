@@ -140,7 +140,7 @@
         if (res.ok) {
           showMessage('Signup successful! Redirecting...', 'green');
           setTimeout(() => {
-            window.location.href = 'loginPage.html';
+            window.location.href = '/';
           }, 1500);
         } else {
           showMessage(data.message || 'Signup failed');

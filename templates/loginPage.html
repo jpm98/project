@@ -145,7 +145,7 @@
         if (res.ok) {
           showMessage('Login successful!', 'green');
           setTimeout(() => {
-            window.location.href = 'index.html'; // Your dashboard or home
+            window.location.href = '/index.html';
           }, 1000);
         } else if (res.status === 401) {
           showMessage('Invalid username or password');
