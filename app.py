@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask_cors import CORS
 from datetime import datetime, timedelta
@@ -33,9 +33,9 @@ def send_email(to_email, otp):
     server.login("your_email@gmail.com", "YOUR_APP_PASSWORD")
     server.send_message(msg)
     server.quit()
-@app.route('/')
-def index():
-    return '✅ Flask app is running on Render!'
+@app.route("/")
+def login():
+    return render_template("login.html")
 
 # --- 1) Send OTP ---
 @app.route('/send-reset-otp', methods=['POST'])
